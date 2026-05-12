@@ -282,6 +282,30 @@
       padding: 0.5rem;
     }
 
+    .language-toggle {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      cursor: pointer;
+      padding: 0.5rem 0.8rem;
+      border-left: 1px solid rgba(159, 122, 234, 0.3);
+      transition: color 0.3s;
+    }
+
+    .language-toggle:hover {
+      color: var(--accent-purple);
+    }
+
+    body.light-mode .language-toggle {
+      color: #333;
+      border-left: 1px solid #ddd;
+    }
+
+    body.light-mode .language-toggle:hover {
+      color: #7c3aed;
+    }
+
     /* 히어로 섹션 */
     .hero {
       width: 100%;
@@ -1063,6 +1087,7 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
       <button class="theme-toggle">☀️</button>
+      <button class="language-toggle">한/EN</button>
     </nav>
   </header>
 
@@ -1256,6 +1281,67 @@
   </footer>
 
   <script>
+    // 언어 데이터
+    const translations = {
+      en: {
+        nav_home: 'Home',
+        nav_projects: 'Projects',
+        nav_contact: 'Contact',
+        hero_title: 'Hey, I\'m Nadhir',
+        hero_subtitle: 'A Software Developer',
+        hero_description: 'A fullstack developer with solid foundations in design, passionate about crafting seamless user experiences I thrive at the intersection of creativity and functionality.',
+        btn_contact: '📬 Contact Me',
+        btn_projects: '👁️ View Projects',
+        skills_title: 'Building Digital Experiences',
+        skills_description: 'I specialize in creating stunning user interfaces and developing high-quality applications that stand out.',
+        skill1_title: 'What I can do',
+        skill1_desc: 'I can help develop solutions that will help you grow your business.',
+        skill2_title: 'Tools I Use',
+        skill2_desc: 'I use the latest technologies to build functional and scalable products.',
+        skill3_title: 'UI/UX Design',
+        skill3_desc: 'I help design clean and modern interfaces.',
+        skill4_title: 'Problem Solving',
+        skill4_desc: 'Creative solutions for complex technical challenges.',
+        skill5_title: 'DevOps & Infrastructure',
+        skill5_desc: 'Building and maintaining reliable deployment systems.',
+        skill6_title: 'Project Management',
+        skill6_desc: 'Leading teams and delivering projects on schedule.',
+        contact_title: 'Contact.',
+        contact_desc: 'Contact me or follow my social media',
+        footer_text: '🚀 Passionate developer at Figma. Built with Next.js, TypeScript'
+      },
+      ko: {
+        nav_home: '홈',
+        nav_projects: '프로젝트',
+        nav_contact: '연락처',
+        hero_title: '안녕하세요, 저는 나디르입니다',
+        hero_subtitle: '풀스택 소프트웨어 개발자',
+        hero_description: '디자인에 탄탄한 기초를 가진 풀스택 개발자로, 사용자 경험을 원활하게 만들기에 열정적입니다. 창의성과 기능성의 교차점에서 최고의 결과를 만들어냅니다.',
+        btn_contact: '📬 연락하기',
+        btn_projects: '👁️ 프로젝트 보기',
+        skills_title: '디지털 경험 구축하기',
+        skills_description: '뛰어난 사용자 인터페이스를 만들고 높은 품질의 애플리케이션을 개발하는 것을 전문으로 합니다.',
+        skill1_title: '할 수 있는 것',
+        skill1_desc: '비즈니스 성장을 도울 수 있는 솔루션을 개발하는 데 도움을 드립니다.',
+        skill2_title: '사용하는 도구',
+        skill2_desc: '최신 기술을 사용하여 기능적이고 확장 가능한 제품을 만듭니다.',
+        skill3_title: 'UI/UX 디자인',
+        skill3_desc: '깨끗하고 현대적인 인터페이스 디자인을 도와드립니다.',
+        skill4_title: '문제 해결',
+        skill4_desc: '복잡한 기술적 과제에 대한 창의적인 솔루션.',
+        skill5_title: 'DevOps & 인프라',
+        skill5_desc: '신뢰할 수 있는 배포 시스템 구축 및 유지.',
+        skill6_title: '프로젝트 관리',
+        skill6_desc: '팀 리드 및 일정에 맞는 프로젝트 완료.',
+        contact_title: '연락처.',
+        contact_desc: '저와 연락하거나 소셜 미디어를 팔로우하세요',
+        footer_text: '🚀 Figma의 열정적인 개발자. Next.js, TypeScript로 제작됨'
+      }
+    };
+
+    // 현재 언어 상태
+    let currentLanguage = localStorage.getItem('language') || 'en';
+
     // 테마 토글 기능
     const themeToggle = document.querySelector('.theme-toggle');
     const html = document.documentElement;
@@ -1275,6 +1361,92 @@
       localStorage.setItem('theme', newMode);
       themeToggle.textContent = newMode === 'dark' ? '☀️' : '🌙';
     });
+
+    // 언어 토글 기능
+    const languageToggle = document.querySelector('.language-toggle');
+    languageToggle.textContent = currentLanguage === 'en' ? '한/EN' : 'EN/한';
+
+    languageToggle.addEventListener('click', () => {
+      currentLanguage = currentLanguage === 'en' ? 'ko' : 'en';
+      localStorage.setItem('language', currentLanguage);
+      languageToggle.textContent = currentLanguage === 'en' ? '한/EN' : 'EN/한';
+      updateLanguage();
+    });
+
+    // 언어 변경 함수
+    function updateLanguage() {
+      const t = translations[currentLanguage];
+
+      // 네비게이션
+      document.querySelectorAll('.nav-links a')[0].textContent = t.nav_home;
+      document.querySelectorAll('.nav-links a')[1].textContent = t.nav_projects;
+      document.querySelectorAll('.nav-links a')[2].textContent = t.nav_contact;
+
+      // 히어로 섹션
+      const h1 = document.querySelector('.hero h1');
+      if (h1) {
+        const spans = h1.querySelectorAll('span');
+        h1.innerHTML = currentLanguage === 'en'
+          ? `Hey, I'm <span>Nadhir</span><br>A <span>Software Developer</span>`
+          : `안녕하세요, 저는 <span>개발자</span>입니다<br>풀스택 <span>소프트웨어 개발자</span>`;
+      }
+
+      const heroDesc = document.querySelector('.hero-description');
+      if (heroDesc) heroDesc.textContent = t.hero_description;
+
+      // 버튼
+      const buttons = document.querySelectorAll('.hero-actions .btn');
+      if (buttons[0]) buttons[0].textContent = t.btn_contact;
+      if (buttons[1]) buttons[1].textContent = t.btn_projects;
+
+      // 스킬 섹션
+      const skillsH2 = document.querySelector('.skills h2');
+      if (skillsH2) skillsH2.textContent = t.skills_title;
+
+      const skillsDesc = document.querySelector('.skills-description');
+      if (skillsDesc) skillsDesc.textContent = t.skills_description;
+
+      // 스킬 카드
+      const skillCards = document.querySelectorAll('.skill-card');
+      const cardTitles = [t.skill1_title, t.skill2_title, t.skill3_title, t.skill4_title, t.skill5_title, t.skill6_title];
+      const cardDescs = [t.skill1_desc, t.skill2_desc, t.skill3_desc, t.skill4_desc, t.skill5_desc, t.skill6_desc];
+
+      skillCards.forEach((card, index) => {
+        const h3 = card.querySelector('h3');
+        const p = card.querySelector('p');
+        if (h3) h3.textContent = cardTitles[index];
+        if (p) p.textContent = cardDescs[index];
+      });
+
+      // Contact 섹션
+      const contactH2 = document.querySelector('.contact-left h2');
+      if (contactH2) {
+        if (currentLanguage === 'en') {
+          contactH2.innerHTML = 'Contact<span>.</span>';
+        } else {
+          contactH2.innerHTML = '연락처<span>.</span>';
+        }
+      }
+
+      const contactDesc = document.querySelector('.contact-left p');
+      if (contactDesc) contactDesc.textContent = t.contact_desc;
+
+      // 푸터
+      const footerP = document.querySelector('.footer-info p:nth-child(2)');
+      if (footerP) {
+        const emoji = '🚀';
+        if (currentLanguage === 'en') {
+          footerP.textContent = emoji + ' Passionate developer at Figma. Built with Next.js, TypeScript';
+        } else {
+          footerP.textContent = emoji + ' Figma의 열정적인 개발자. Next.js, TypeScript로 제작됨';
+        }
+      }
+    }
+
+    // 초기 언어 적용
+    if (currentLanguage === 'ko') {
+      updateLanguage();
+    }
 
     // 부드러운 스크롤
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
