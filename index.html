@@ -212,11 +212,12 @@
 
     nav {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       padding: 1.5rem 2rem;
       max-width: 1400px;
       margin: 0 auto;
+      position: relative;
     }
 
     .logo {
@@ -229,6 +230,8 @@
       color: var(--text-light);
       transition: color 0.3s;
       cursor: pointer;
+      position: absolute;
+      left: 2rem;
     }
 
     .logo:hover {
@@ -280,16 +283,32 @@
       font-size: 1.1rem;
       cursor: pointer;
       padding: 0.5rem;
+      position: absolute;
+      right: 3rem;
+      transition: color 0.3s;
+    }
+
+    .theme-toggle:hover {
+      color: var(--accent-purple);
+    }
+
+    body.light-mode .theme-toggle {
+      color: #333;
+    }
+
+    body.light-mode .theme-toggle:hover {
+      color: #7c3aed;
     }
 
     .language-toggle {
       background: none;
       border: none;
       color: var(--text-light);
-      font-size: 0.85rem;
+      font-size: 1.1rem;
       cursor: pointer;
-      padding: 0.5rem 0.8rem;
-      border-left: 1px solid rgba(159, 122, 234, 0.3);
+      padding: 0.5rem;
+      position: absolute;
+      right: 2rem;
       transition: color 0.3s;
     }
 
@@ -299,7 +318,6 @@
 
     body.light-mode .language-toggle {
       color: #333;
-      border-left: 1px solid #ddd;
     }
 
     body.light-mode .language-toggle:hover {
@@ -1087,7 +1105,7 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
       <button class="theme-toggle">☀️</button>
-      <button class="language-toggle">한/EN</button>
+      <button class="language-toggle">🌐</button>
     </nav>
   </header>
 
@@ -1364,12 +1382,11 @@
 
     // 언어 토글 기능
     const languageToggle = document.querySelector('.language-toggle');
-    languageToggle.textContent = currentLanguage === 'en' ? '한/EN' : 'EN/한';
+    languageToggle.textContent = '🌐';
 
     languageToggle.addEventListener('click', () => {
       currentLanguage = currentLanguage === 'en' ? 'ko' : 'en';
       localStorage.setItem('language', currentLanguage);
-      languageToggle.textContent = currentLanguage === 'en' ? '한/EN' : 'EN/한';
       updateLanguage();
     });
 
