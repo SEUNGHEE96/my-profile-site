@@ -444,10 +444,32 @@
     }
 
     .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
       gap: 2rem;
       margin-bottom: 2rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      padding: 1rem 0;
+      position: relative;
+    }
+
+    .skills-grid::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .skills-grid::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .skills-grid::-webkit-scrollbar-thumb {
+      background: rgba(159, 122, 234, 0.3);
+      border-radius: 10px;
+    }
+
+    .skills-grid::-webkit-scrollbar-thumb:hover {
+      background: rgba(159, 122, 234, 0.5);
     }
 
     .skill-card {
@@ -457,6 +479,9 @@
       padding: 2rem;
       transition: all 0.3s;
       cursor: pointer;
+      flex: 0 0 calc(33.333% - 1.35rem);
+      min-width: 300px;
+      scroll-snap-align: start;
     }
 
     .skill-card:hover {
@@ -538,6 +563,56 @@
 
     .view-projects-btn {
       display: none;
+    }
+
+    .skills-container {
+      position: relative;
+    }
+
+    .slide-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(159, 122, 234, 0.2);
+      border: 1px solid rgba(159, 122, 234, 0.3);
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      user-select: none;
+    }
+
+    .slide-button:hover {
+      background: rgba(159, 122, 234, 0.4);
+      border-color: var(--accent-purple);
+      color: var(--accent-purple);
+    }
+
+    .slide-button.prev {
+      left: -60px;
+    }
+
+    .slide-button.next {
+      right: -60px;
+    }
+
+    body.light-mode .slide-button {
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      color: #666;
+    }
+
+    body.light-mode .slide-button:hover {
+      background: rgba(124, 58, 237, 0.3);
+      border-color: #7c3aed;
+      color: #7c3aed;
     }
 
     /* 연락처 섹션 */
@@ -879,8 +954,17 @@
 
     /* 반응형 */
     @media (max-width: 1024px) {
-      .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .skill-card {
+        flex: 0 0 calc(50% - 1rem);
+        min-width: 280px;
+      }
+
+      .slide-button.prev {
+        left: -50px;
+      }
+
+      .slide-button.next {
+        right: -50px;
       }
 
       .skills {
@@ -1017,7 +1101,10 @@
       <p class="skills-description">I specialize in creating stunning user interfaces and developing high-quality applications that stand out.</p>
     </div>
 
-    <div class="skills-grid">
+    <div class="skills-container">
+      <button class="slide-button prev" onclick="slideLeft()">‹</button>
+      <button class="slide-button next" onclick="slideRight()">›</button>
+      <div class="skills-grid" id="skillsGrid">
       <!-- What I can do -->
       <div class="skill-card" data-skill="skill1">
         <div class="skill-card-header">
@@ -1070,6 +1157,52 @@
           <li>Wireframes & Prototypes</li>
         </ul>
       </div>
+
+      <!-- Card 4 -->
+      <div class="skill-card" data-skill="skill4">
+        <div class="skill-card-header">
+          <div class="skill-icon">💡</div>
+          <h3>Problem Solving</h3>
+        </div>
+        <p>Creative solutions for complex technical challenges.</p>
+        <ul class="skill-list">
+          <li>Algorithm Design</li>
+          <li>System Optimization</li>
+          <li>Code Review</li>
+          <li>Technical Documentation</li>
+        </ul>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="skill-card" data-skill="skill5">
+        <div class="skill-card-header">
+          <div class="skill-icon">🔧</div>
+          <h3>DevOps & Infrastructure</h3>
+        </div>
+        <p>Building and maintaining reliable deployment systems.</p>
+        <ul class="skill-list">
+          <li>Cloud Deployment</li>
+          <li>CI/CD Pipelines</li>
+          <li>Server Configuration</li>
+          <li>Performance Monitoring</li>
+        </ul>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="skill-card" data-skill="skill6">
+        <div class="skill-card-header">
+          <div class="skill-icon">🚀</div>
+          <h3>Project Management</h3>
+        </div>
+        <p>Leading teams and delivering projects on schedule.</p>
+        <ul class="skill-list">
+          <li>Agile Methodology</li>
+          <li>Team Leadership</li>
+          <li>Stakeholder Communication</li>
+          <li>Risk Management</li>
+        </ul>
+      </div>
+    </div>
     </div>
 
     <button class="btn view-projects-btn">👁️ View My Projects</button>
@@ -1154,6 +1287,60 @@
       });
     });
 
+    // 슬라이드 기능
+    const skillsGrid = document.getElementById('skillsGrid');
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    skillsGrid.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.pageX - skillsGrid.offsetLeft;
+      scrollLeft = skillsGrid.scrollLeft;
+    });
+
+    skillsGrid.addEventListener('mouseleave', () => {
+      isDragging = false;
+    });
+
+    skillsGrid.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    skillsGrid.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - skillsGrid.offsetLeft;
+      const walk = (x - startX) * 1;
+      skillsGrid.scrollLeft = scrollLeft - walk;
+    });
+
+    // 터치 드래그 (모바일)
+    skillsGrid.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].pageX - skillsGrid.offsetLeft;
+      scrollLeft = skillsGrid.scrollLeft;
+    });
+
+    skillsGrid.addEventListener('touchmove', (e) => {
+      const x = e.touches[0].pageX - skillsGrid.offsetLeft;
+      const walk = (x - startX) * 1;
+      skillsGrid.scrollLeft = scrollLeft - walk;
+    });
+
+    function slideLeft() {
+      skillsGrid.scrollBy({
+        left: -350,
+        behavior: 'smooth'
+      });
+    }
+
+    function slideRight() {
+      skillsGrid.scrollBy({
+        left: 350,
+        behavior: 'smooth'
+      });
+    }
+
     // 스킬 카드 모달 데이터
     const skillData = {
       skill1: {
@@ -1196,6 +1383,48 @@
           <li>Wireframes & Prototypes - Detailed planning and visualization</li>
           <li>Design Systems - Creating scalable and consistent design guidelines</li>
           <li>Accessibility - Ensuring inclusive design for all users</li>
+        </ul>`
+      },
+      skill4: {
+        icon: '💡',
+        title: 'Problem Solving',
+        content: `<p>I excel at finding creative solutions for complex technical challenges and optimizing existing systems.</p>
+        <p><strong>Problem-Solving Approach:</strong></p>
+        <ul class="modal-list">
+          <li>Algorithm Design - Efficient and optimized algorithms</li>
+          <li>System Optimization - Performance tuning and bottleneck analysis</li>
+          <li>Code Review - Constructive feedback and best practices</li>
+          <li>Technical Documentation - Clear and comprehensive documentation</li>
+          <li>Debugging - Systematic approach to identifying and fixing issues</li>
+          <li>Refactoring - Improving code quality and maintainability</li>
+        </ul>`
+      },
+      skill5: {
+        icon: '🔧',
+        title: 'DevOps & Infrastructure',
+        content: `<p>Building and maintaining reliable deployment systems with best practices in cloud infrastructure and automation.</p>
+        <p><strong>DevOps Expertise:</strong></p>
+        <ul class="modal-list">
+          <li>Cloud Deployment - AWS, Google Cloud, Azure expertise</li>
+          <li>CI/CD Pipelines - Automated testing and deployment</li>
+          <li>Server Configuration - Linux, Windows server setup</li>
+          <li>Performance Monitoring - Observability and logging</li>
+          <li>Security - Infrastructure security and compliance</li>
+          <li>Containerization - Docker and Kubernetes orchestration</li>
+        </ul>`
+      },
+      skill6: {
+        icon: '🚀',
+        title: 'Project Management',
+        content: `<p>Leading teams and delivering projects on schedule with clear communication and effective planning.</p>
+        <p><strong>Management Skills:</strong></p>
+        <ul class="modal-list">
+          <li>Agile Methodology - Scrum and Kanban expertise</li>
+          <li>Team Leadership - Motivating and developing team members</li>
+          <li>Stakeholder Communication - Clear and transparent reporting</li>
+          <li>Risk Management - Identifying and mitigating project risks</li>
+          <li>Resource Planning - Efficient resource allocation</li>
+          <li>Process Improvement - Continuous optimization of workflows</li>
         </ul>`
       }
     };
