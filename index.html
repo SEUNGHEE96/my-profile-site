@@ -398,7 +398,7 @@
     .skills {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 6rem 2rem;
+      padding: 4rem 2rem;
       position: relative;
       z-index: 1;
       min-height: 100vh;
@@ -527,7 +527,7 @@
     .contact {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 6rem 2rem;
+      padding: 4rem 2rem;
       background: transparent;
       border: none;
       display: flex;
@@ -653,16 +653,16 @@
     /* 스크롤 업 버튼 */
     .scroll-to-top {
       position: fixed;
-      bottom: 3rem;
+      bottom: 2.5rem;
       left: 50%;
       transform: translateX(-50%);
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: rgba(159, 122, 234, 0.2);
-      border: 1px solid rgba(159, 122, 234, 0.3);
+      background: rgba(159, 122, 234, 0.12);
+      border: 1px solid rgba(159, 122, 234, 0.2);
       color: var(--text-muted);
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       cursor: pointer;
       transition: all 0.3s;
       display: none;
@@ -677,20 +677,20 @@
     }
 
     .scroll-to-top:hover {
-      background: rgba(159, 122, 234, 0.4);
+      background: rgba(159, 122, 234, 0.25);
       color: var(--accent-purple);
-      transform: translateX(-50%) translateY(-5px);
+      transform: translateX(-50%) translateY(-4px);
       border-color: var(--accent-purple);
     }
 
     body.light-mode .scroll-to-top {
-      background: rgba(124, 58, 237, 0.15);
-      border: 1px solid rgba(124, 58, 237, 0.2);
-      color: #666;
+      background: rgba(124, 58, 237, 0.1);
+      border: 1px solid rgba(124, 58, 237, 0.15);
+      color: #999;
     }
 
     body.light-mode .scroll-to-top:hover {
-      background: rgba(124, 58, 237, 0.25);
+      background: rgba(124, 58, 237, 0.2);
       color: #7c3aed;
       border-color: #7c3aed;
     }
@@ -974,8 +974,8 @@
       </p>
 
       <div class="hero-actions">
-        <button class="btn">📬 Contact Me</button>
-        <button class="btn">👁️ View Projects</button>
+        <button class="btn" onclick="scrollToContact()">📬 Contact Me</button>
+        <button class="btn" onclick="scrollToProjects()">👁️ View Projects</button>
         <div class="separator"></div>
         <ul class="social-links">
           <li><a href="#" title="GitHub">🐙</a></li>
@@ -1232,6 +1232,17 @@
         behavior: 'smooth'
       });
     });
+
+    // 섹션 스크롤 함수
+    function scrollToProjects() {
+      const projectsSection = document.getElementById('projects');
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function scrollToContact() {
+      const contactSection = document.getElementById('contact');
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
   </script>
 </body>
 </html>
