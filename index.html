@@ -1256,7 +1256,7 @@
       const sectionTop = projectsSection.offsetTop;
       const sectionHeight = projectsSection.offsetHeight;
       const windowHeight = window.innerHeight;
-      const scrollPosition = sectionTop + (sectionHeight - windowHeight) / 2;
+      const scrollPosition = sectionTop + sectionHeight / 2 - windowHeight / 2;
 
       window.scrollTo({
         top: scrollPosition,
@@ -1269,7 +1269,7 @@
       const sectionTop = contactSection.offsetTop;
       const sectionHeight = contactSection.offsetHeight;
       const windowHeight = window.innerHeight;
-      const scrollPosition = sectionTop + (sectionHeight - windowHeight) / 2;
+      const scrollPosition = sectionTop + sectionHeight / 2 - windowHeight / 2;
 
       window.scrollTo({
         top: scrollPosition,
