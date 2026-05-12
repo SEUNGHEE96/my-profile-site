@@ -398,9 +398,13 @@
     .skills {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 4rem 2rem;
+      padding: 6rem 2rem;
       position: relative;
       z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .skills > div {
@@ -530,10 +534,11 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin-bottom: 3rem;
+      margin-bottom: 0;
       position: relative;
       z-index: 1;
       text-align: center;
+      min-height: 100vh;
     }
 
     .contact-left {
@@ -643,6 +648,51 @@
 
     .contact-form-field {
       display: none;
+    }
+
+    /* 스크롤 업 버튼 */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(159, 122, 234, 0.2);
+      border: 1px solid rgba(159, 122, 234, 0.3);
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      backdrop-filter: blur(10px);
+    }
+
+    .scroll-to-top.show {
+      display: flex;
+    }
+
+    .scroll-to-top:hover {
+      background: rgba(159, 122, 234, 0.4);
+      color: var(--accent-purple);
+      transform: translateX(-50%) translateY(-5px);
+      border-color: var(--accent-purple);
+    }
+
+    body.light-mode .scroll-to-top {
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      color: #666;
+    }
+
+    body.light-mode .scroll-to-top:hover {
+      background: rgba(124, 58, 237, 0.25);
+      color: #7c3aed;
+      border-color: #7c3aed;
     }
 
     /* 푸터 */
@@ -814,6 +864,16 @@
     @media (max-width: 1024px) {
       .skills-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .skills {
+        min-height: auto;
+        padding: 4rem 2rem;
+      }
+
+      .contact {
+        min-height: auto;
+        padding: 4rem 2rem;
       }
     }
 
@@ -1013,6 +1073,9 @@
     </div>
   </section>
 
+  <!-- 스크롤 업 버튼 -->
+  <button class="scroll-to-top" id="scrollToTopBtn">^</button>
+
   <!-- 모달 팝업 -->
   <div class="modal" id="skillModal">
     <div class="modal-content">
@@ -1150,6 +1213,24 @@
       if (e.key === 'Escape') {
         closeModal();
       }
+    });
+
+    // 스크롤 업 버튼 기능
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('show');
+      } else {
+        scrollToTopBtn.classList.remove('show');
+      }
+    });
+
+    scrollToTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
   </script>
 </body>
