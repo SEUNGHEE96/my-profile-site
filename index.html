@@ -1253,18 +1253,36 @@
     // 섹션 스크롤 함수
     function scrollToProjects() {
       const projectsSection = document.getElementById('projects');
-      projectsSection.scrollIntoView({ behavior: 'smooth' });
+      const sectionTop = projectsSection.offsetTop;
+      const sectionHeight = projectsSection.offsetHeight;
+      const windowHeight = window.innerHeight;
+      const scrollPosition = sectionTop + (sectionHeight - windowHeight) / 2;
+
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth'
+      });
     }
 
     function scrollToContact() {
       const contactSection = document.getElementById('contact');
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+      const sectionTop = contactSection.offsetTop;
+      const sectionHeight = contactSection.offsetHeight;
+      const windowHeight = window.innerHeight;
+      const scrollPosition = sectionTop + (sectionHeight - windowHeight) / 2;
+
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth'
+      });
     }
 
     function scrollToHome(e) {
       e.preventDefault();
-      const heroSection = document.getElementById('home');
-      heroSection.scrollIntoView({ behavior: 'smooth' });
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
   </script>
 </body>
