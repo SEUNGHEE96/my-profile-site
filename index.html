@@ -415,13 +415,15 @@
       margin-bottom: 0.5rem;
       color: var(--text-light);
       font-weight: 600;
+      display: inline;
+      margin-right: 1rem;
     }
 
     .skills-description {
       color: var(--text-muted);
       margin-bottom: 2.5rem;
-      max-width: 600px;
       font-size: 0.9rem;
+      display: inline;
     }
 
     .skills-grid {
@@ -437,11 +439,20 @@
       border-radius: 8px;
       padding: 1.5rem;
       transition: all 0.3s;
+      cursor: pointer;
     }
 
     .skill-card:hover {
       border-color: var(--accent-purple);
       background: rgba(159, 122, 234, 0.08);
+      transform: translateY(-3px);
+    }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
     }
 
     .skill-icon {
@@ -453,14 +464,14 @@
       align-items: center;
       justify-content: center;
       font-size: 1.3rem;
-      margin-bottom: 1rem;
+      flex-shrink: 0;
     }
 
     .skill-card h3 {
       font-size: 1.1rem;
-      margin-bottom: 0.6rem;
       color: var(--text-light);
       font-weight: 600;
+      margin: 0;
     }
 
     .skill-card p {
@@ -480,7 +491,7 @@
       font-size: 0.85rem;
       padding-left: 1.2rem;
       position: relative;
-      display: flex;
+      display: block;
     }
 
     .skill-list li:before {
@@ -494,16 +505,16 @@
     .skill-subheader {
       font-weight: 600;
       color: var(--text-light);
-      display: inline;
+      display: block;
+      margin-bottom: 0.2rem;
     }
 
     .skill-subheader::after {
-      content: ": ";
+      content: "";
     }
 
     .view-projects-btn {
-      display: inline-block;
-      margin-top: 1rem;
+      display: none;
     }
 
     /* 연락처 섹션 */
@@ -679,6 +690,135 @@
       color: var(--accent-purple);
     }
 
+    /* 모달 팝업 */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: rgba(26, 26, 26, 0.98);
+      border: 1px solid rgba(159, 122, 234, 0.3);
+      border-radius: 10px;
+      padding: 2.5rem;
+      width: 900px;
+      max-height: 900px;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: color 0.3s;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      color: var(--accent-purple);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-light));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      font-size: 1.6rem;
+      color: var(--text-light);
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .modal-body {
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+
+    .modal-body p {
+      margin-bottom: 1rem;
+    }
+
+    .modal-list {
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .modal-list li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .modal-list li:before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent-purple);
+    }
+
+    body.light-mode .modal-content {
+      background: rgba(245, 245, 245, 0.98);
+      border: 1px solid #ddd;
+    }
+
+    body.light-mode .modal-close:hover {
+      color: #7c3aed;
+    }
+
+    body.light-mode .modal-title {
+      color: #1a1a1a;
+    }
+
+    body.light-mode .modal-body {
+      color: #666;
+    }
+
+    @media (max-width: 900px) {
+      .modal-content {
+        width: 90vw;
+        max-height: 90vh;
+        padding: 2rem;
+      }
+    }
+
     /* 반응형 */
     @media (max-width: 768px) {
       nav {
@@ -773,16 +913,18 @@
 
   <!-- 스킬 섹션 -->
   <section class="skills" id="projects">
-    <h2>Building Digital Experiences</h2>
-    <p class="skills-description">
-      I specialize in creating stunning user interfaces and developing high-quality applications that stand out.
-    </p>
+    <div>
+      <h2>Building Digital Experiences</h2>
+      <p class="skills-description">I specialize in creating stunning user interfaces and developing high-quality applications that stand out.</p>
+    </div>
 
     <div class="skills-grid">
       <!-- What I can do -->
-      <div class="skill-card">
-        <div class="skill-icon">🛠️</div>
-        <h3>What I can do</h3>
+      <div class="skill-card" data-skill="skill1">
+        <div class="skill-card-header">
+          <div class="skill-icon">🛠️</div>
+          <h3>What I can do</h3>
+        </div>
         <p>I can help develop solutions that will help you grow your business.</p>
         <ul class="skill-list">
           <li>Full Stack Development</li>
@@ -793,22 +935,34 @@
       </div>
 
       <!-- Tools I Use -->
-      <div class="skill-card">
-        <div class="skill-icon">⚙️</div>
-        <h3>Tools I Use</h3>
+      <div class="skill-card" data-skill="skill2">
+        <div class="skill-card-header">
+          <div class="skill-icon">⚙️</div>
+          <h3>Tools I Use</h3>
+        </div>
         <p>I use the latest technologies to build functional and scalable products.</p>
         <ul class="skill-list">
-          <li><span class="skill-subheader">Frontend</span> React, TypeScript</li>
-          <li><span class="skill-subheader">Backend</span> Node.js, MongoDB, PostgreSQL</li>
-          <li><span class="skill-subheader">Design</span> Figma, Photoshop</li>
-          <li><span class="skill-subheader">Other</span> Git, Docker, AWS</li>
+          <li><span class="skill-subheader">Frontend</span>
+            <div>React, TypeScript</div>
+          </li>
+          <li><span class="skill-subheader">Backend</span>
+            <div>Node.js, MongoDB, PostgreSQL</div>
+          </li>
+          <li><span class="skill-subheader">Design</span>
+            <div>Figma, Photoshop</div>
+          </li>
+          <li><span class="skill-subheader">Other</span>
+            <div>Git, Docker, AWS</div>
+          </li>
         </ul>
       </div>
 
       <!-- UI/UX Design -->
-      <div class="skill-card">
-        <div class="skill-icon">🎨</div>
-        <h3>UI/UX Design</h3>
+      <div class="skill-card" data-skill="skill3">
+        <div class="skill-card-header">
+          <div class="skill-icon">🎨</div>
+          <h3>UI/UX Design</h3>
+        </div>
         <p>I help design clean and modern interfaces.</p>
         <ul class="skill-list">
           <li>User-Centered Design</li>
@@ -864,6 +1018,20 @@
     </div>
   </section>
 
+  <!-- 모달 팝업 -->
+  <div class="modal" id="skillModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-header">
+        <div class="modal-icon" id="modalIcon">🛠️</div>
+        <h2 class="modal-title" id="modalTitle">What I can do</h2>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <p>Loading...</p>
+      </div>
+    </div>
+  </div>
+
   <!-- 푸터 -->
   <footer>
     <div class="footer-info">
@@ -909,6 +1077,84 @@
           target.scrollIntoView({ behavior: 'smooth' });
         }
       });
+    });
+
+    // 스킬 카드 모달 데이터
+    const skillData = {
+      skill1: {
+        icon: '🛠️',
+        title: 'What I can do',
+        content: `<p>I can help develop solutions that will help you grow your business. With expertise in full-stack development, I specialize in creating comprehensive solutions from frontend to backend.</p>
+        <p><strong>Core Competencies:</strong></p>
+        <ul class="modal-list">
+          <li>Full Stack Development - Building complete web applications</li>
+          <li>Mobile App Development - iOS and Android solutions</li>
+          <li>Database Design - Efficient and scalable database architecture</li>
+          <li>API Integration - Seamless third-party service integration</li>
+          <li>Performance Optimization - Creating lightning-fast applications</li>
+          <li>System Architecture - Designing robust and scalable systems</li>
+        </ul>`
+      },
+      skill2: {
+        icon: '⚙️',
+        title: 'Tools I Use',
+        content: `<p>I use the latest technologies to build functional and scalable products. My tech stack includes modern frameworks, tools, and platforms that enable me to deliver high-quality solutions.</p>
+        <p><strong>Technology Stack:</strong></p>
+        <ul class="modal-list">
+          <li><strong>Frontend:</strong> React, TypeScript, Next.js, Tailwind CSS</li>
+          <li><strong>Backend:</strong> Node.js, Express, Python, Django</li>
+          <li><strong>Databases:</strong> MongoDB, PostgreSQL, Redis, Firebase</li>
+          <li><strong>Design Tools:</strong> Figma, Adobe XD, Photoshop, Illustrator</li>
+          <li><strong>DevOps:</strong> Docker, Git, AWS, CI/CD pipelines</li>
+          <li><strong>Other Tools:</strong> VSCode, Postman, GitHub, Jira</li>
+        </ul>`
+      },
+      skill3: {
+        icon: '🎨',
+        title: 'UI/UX Design',
+        content: `<p>I help design clean and modern interfaces that are both beautiful and functional. My design philosophy combines user-centered principles with contemporary aesthetics.</p>
+        <p><strong>Design Expertise:</strong></p>
+        <ul class="modal-list">
+          <li>User-Centered Design - Creating interfaces based on user research</li>
+          <li>Modern & Clean UI - Minimalist and elegant design principles</li>
+          <li>Responsive Layouts - Seamless experience across all devices</li>
+          <li>Wireframes & Prototypes - Detailed planning and visualization</li>
+          <li>Design Systems - Creating scalable and consistent design guidelines</li>
+          <li>Accessibility - Ensuring inclusive design for all users</li>
+        </ul>`
+      }
+    };
+
+    // 스킬 카드 클릭 이벤트
+    document.querySelectorAll('.skill-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const skillId = this.dataset.skill;
+        const data = skillData[skillId];
+
+        document.getElementById('modalIcon').textContent = data.icon;
+        document.getElementById('modalTitle').textContent = data.title;
+        document.getElementById('modalBody').innerHTML = data.content;
+        document.getElementById('skillModal').classList.add('active');
+      });
+    });
+
+    // 모달 닫기 함수
+    function closeModal() {
+      document.getElementById('skillModal').classList.remove('active');
+    }
+
+    // 모달 외부 클릭 시 닫기
+    document.getElementById('skillModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // ESC 키로 모달 닫기
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
     });
   </script>
 </body>
