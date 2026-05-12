@@ -225,6 +225,22 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      text-decoration: none;
+      color: var(--text-light);
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    .logo:hover {
+      color: var(--accent-purple);
+    }
+
+    body.light-mode .logo {
+      color: #333;
+    }
+
+    body.light-mode .logo:hover {
+      color: #7c3aed;
     }
 
     .logo-icon {
@@ -273,7 +289,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      min-height: 85vh;
       position: relative;
       z-index: 1;
       flex-direction: row-reverse;
@@ -402,7 +418,7 @@
       padding: 2.8rem 2rem;
       position: relative;
       z-index: 1;
-      min-height: 100vh;
+      min-height: 85vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -539,7 +555,7 @@
       position: relative;
       z-index: 1;
       text-align: center;
-      min-height: 100vh;
+      min-height: 85vh;
     }
 
     .contact-left {
@@ -953,10 +969,10 @@
   <!-- 헤더 -->
   <header>
     <nav>
-      <div class="logo">
+      <a href="#home" class="logo" onclick="scrollToHome(event)">
         <div class="logo-icon">◇</div>
         <span>Nadhir.dev</span>
-      </div>
+      </a>
       <ul class="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -1243,6 +1259,12 @@
     function scrollToContact() {
       const contactSection = document.getElementById('contact');
       contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function scrollToHome(e) {
+      e.preventDefault();
+      const heroSection = document.getElementById('home');
+      heroSection.scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 </body>
