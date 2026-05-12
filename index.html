@@ -284,7 +284,7 @@
       cursor: pointer;
       padding: 0.5rem;
       position: absolute;
-      right: 3rem;
+      right: 3.5rem;
       transition: color 0.3s;
     }
 
@@ -1671,10 +1671,11 @@
     // 섹션 스크롤 함수
     function scrollToProjects() {
       const projectsSection = document.getElementById('projects');
-      const sectionTop = projectsSection.offsetTop;
-      const sectionHeight = projectsSection.offsetHeight;
+      const skillsContainer = projectsSection.querySelector('.skills-container');
+      const containerTop = skillsContainer.offsetTop;
+      const containerHeight = skillsContainer.offsetHeight;
       const windowHeight = window.innerHeight;
-      const scrollPosition = sectionTop + sectionHeight / 2 - windowHeight / 2;
+      const scrollPosition = containerTop + containerHeight / 2 - windowHeight / 2;
 
       window.scrollTo({
         top: scrollPosition,
